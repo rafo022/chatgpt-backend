@@ -1,6 +1,7 @@
 {
   "name": "chatgpt-backend",
   "version": "1.0.0",
+  "type": "module",  // Agregado para indicar que estamos usando ESM
   "main": "api/chat.js",
   "scripts": {
     "start": "node api/chat.js"
