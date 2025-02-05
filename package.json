@@ -6,7 +6,6 @@
     "start": "node api/chat.js"
   },
   "dependencies": {
-    "node-fetch": "^3.2.10"
+    "node-fetch": "^3.3.2"
   }
 }
-
