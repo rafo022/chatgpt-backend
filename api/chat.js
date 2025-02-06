@@ -16,7 +16,7 @@ export default async function handler(req, res) {
           'Authorization': `Bearer ${OPENAI_API_KEY}`
         },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo', // Asegúrate de usar un modelo correcto
+          model: 'gpt-3.5-turbo', // Si no tienes acceso a GPT-4, usa este modelo
           messages: [{ role: 'user', content: message }]
         })
       });
@@ -26,13 +26,13 @@ export default async function handler(req, res) {
       if (response.ok) {
         res.status(200).json({ reply: data.choices[0].message.content });
       } else {
+        console.error('Error en la respuesta de OpenAI:', data.error || 'Error desconocido');
         res.status(response.status).json({ error: data.error || 'Error en la respuesta de OpenAI' });
       }
-
     } catch (error) {
+      console.error('Error al procesar la solicitud:', error);
       res.status(500).json({ error: 'Error procesando la solicitud' });
     }
-
   } else {
     res.status(405).json({ error: 'Método no permitido' });
   }
