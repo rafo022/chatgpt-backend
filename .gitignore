@@ -1,0 +1,11 @@
+# Ignorar el archivo DS_Store
+.DS_Store
+
+# Ignorar las dependencias de Node.js (node_modules)
+node_modules/
+
+# Ignorar archivos de logs
+*.log
+
+# Ignorar archivos de entorno
+.env
