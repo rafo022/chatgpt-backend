@@ -16,15 +16,24 @@ const sendMessage = async () => {
       },
       body: JSON.stringify({ message: userInput })
     });
-    
-    const data = await response.json();
-    if (data.reply) {
-      // Mostrar la respuesta del bot
-      addMessage(data.reply, "bot");
+
+    // Verificar si la respuesta es exitosa
+    if (response.ok) {
+      const data = await response.json();
+      if (data.reply) {
+        // Mostrar la respuesta del bot
+        addMessage(data.reply, "bot");
+      } else {
+        // Si la respuesta no tiene 'reply', mostrar error
+        addMessage("Lo siento, no pude procesar tu mensaje.", "bot");
+      }
     } else {
-      addMessage("Lo siento, no pude procesar tu mensaje.", "bot");
+      // Si la respuesta HTTP no es 200, mostrar el mensaje de error
+      const errorData = await response.json();
+      addMessage(`Error: ${errorData.error || 'No se pudo procesar la solicitud'}`, "bot");
     }
   } catch (error) {
+    // Si hay un error en la comunicación con el backend
     addMessage("Hubo un error al conectar con el servidor.", "bot");
   }
 };
@@ -38,4 +47,3 @@ const addMessage = (message, sender) => {
   // Scroll hacia abajo para mostrar el último mensaje
   chatBox.scrollTop = chatBox.scrollHeight;
 };
-
