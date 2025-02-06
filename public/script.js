@@ -1,5 +1,3 @@
-const chatBox = document.getElementById("chat-box");
-
 const sendMessage = async () => {
   const userInput = document.getElementById("user-input").value;
   if (!userInput) return;
@@ -30,20 +28,11 @@ const sendMessage = async () => {
     } else {
       // Si la respuesta HTTP no es 200, mostrar el mensaje de error
       const errorData = await response.json();
-      addMessage(`Error: ${errorData.error || 'No se pudo procesar la solicitud'}`, "bot");
+      addMessage(`Error: ${JSON.stringify(errorData)}`, "bot"); // Mostrar el error completo
     }
   } catch (error) {
     // Si hay un error en la comunicación con el backend
-    addMessage("Hubo un error al conectar con el servidor.", "bot");
+    addMessage(`Hubo un error al conectar con el servidor: ${JSON.stringify(error)}`, "bot"); // Mostrar detalles del error
   }
 };
 
-const addMessage = (message, sender) => {
-  const messageElement = document.createElement("div");
-  messageElement.classList.add("chat-message", sender);
-  messageElement.textContent = message;
-  chatBox.appendChild(messageElement);
-
-  // Scroll hacia abajo para mostrar el último mensaje
-  chatBox.scrollTop = chatBox.scrollHeight;
-};
