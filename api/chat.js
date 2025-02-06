@@ -3,6 +3,13 @@ export default async function handler(req, res) {
     const { message } = req.body;
     const OPENAI_API_KEY = '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';
 
+
+ try {
+      // Verifica que la clave de API esté correctamente configurada
+      if (!OPENAI_API_KEY) {
+        return res.status(500).json({ error: 'API Key no configurada' });
+      }
+
     try {
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
