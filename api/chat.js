@@ -3,7 +3,6 @@ export default async function handler(req, res) {
     const { message } = req.body;
     const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
-    // Verifica que la clave de API esté configurada
     if (!OPENAI_API_KEY) {
       return res.status(500).json({ error: 'API Key no configurada' });
     }
@@ -16,8 +15,12 @@ export default async function handler(req, res) {
           'Authorization': `Bearer ${OPENAI_API_KEY}`
         },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo', // Si no tienes acceso a GPT-4, usa este modelo
-          messages: [{ role: 'user', content: message }]
+          model: 'gpt-3.5-turbo',
+          messages: [
+            { role: 'system', content: 'Eres un asistente especializado en un proyecto inmobiliario.' },
+            { role: 'assistant', content: '¡Hola! Bienvenido a nuestro proyecto inmobiliario. ¿En qué puedo ayudarte?' },
+            { role: 'user', content: message }
+          ]
         })
       });
 
